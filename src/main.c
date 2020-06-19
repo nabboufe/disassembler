@@ -6,7 +6,7 @@
 /*   By: nabboufe <nabboufe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 11:57:34 by nabboufe          #+#    #+#             */
-/*   Updated: 2020/06/19 23:15:56 by nabboufe         ###   ########.fr       */
+/*   Updated: 2020/06/19 23:47:54 by nabboufe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int		error_management(int truth, char *filename, uint8_t *content)
 	if (truth == 1)
 		write(1, "usage: ./disassembler <file.cor>\n", 34);
 	else if (truth == 2)
-		ft_printf("Error: could not create/open file : %s\n", filename);
+		write(1, "Error: could not create/open file.\n", 36);
 	else if (truth == 3)
 		write(1, "Error: bad file format (bad magic number)", 42);
 	else if (truth == 4)
@@ -100,7 +100,7 @@ int				main(int argc, char **argv)
 	if ((core_file.fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644)) < 0)
 	{
 		free(filename);
-		return (error_management(2, filename, NULL));
+		return (error_management(2, NULL, NULL));
 	}
 	free(filename);
 	if (!load_file(argv[1], &core_file))
@@ -108,10 +108,7 @@ int				main(int argc, char **argv)
 	w_header(&core_file);
 	core_file.index = 0;
 	while (core_file.header.prog_size > core_file.index)
-	{
 		core_file.index += w_program(&core_file);
-		printf("1 - file->index == %d\n", core_file.index);
-	}
 	filename = is_cor(argv[1]);
 	ft_printf("Writing file in : %s\n", filename);
 	free(filename);
