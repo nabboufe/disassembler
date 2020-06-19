@@ -6,14 +6,14 @@
 /*   By: nabboufe <nabboufe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/19 19:30:19 by nabboufe          #+#    #+#             */
-/*   Updated: 2020/06/19 21:43:00 by nabboufe         ###   ########.fr       */
+/*   Updated: 2020/06/19 23:26:01 by nabboufe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/disassemble.h"
 
 static unsigned int 	w_dir(unsigned int type, uint8_t op_code,
-    t_corefile *file)
+	t_corefile *file)
 {
 	int64_t param;
 
@@ -39,8 +39,8 @@ static unsigned int 	w_dir(unsigned int type, uint8_t op_code,
 	return (0);
 }
 
-unsigned int	        w_param(unsigned int type, uint8_t op_code,
-    t_corefile *file)
+unsigned int			w_param(unsigned int type, uint8_t op_code,
+	t_corefile *file)
 {
 	int64_t	param;
 

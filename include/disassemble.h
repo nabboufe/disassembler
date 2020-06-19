@@ -6,7 +6,7 @@
 /*   By: nabboufe <nabboufe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 11:30:25 by nabboufe          #+#    #+#             */
-/*   Updated: 2020/06/19 21:43:16 by nabboufe         ###   ########.fr       */
+/*   Updated: 2020/06/19 23:31:11 by nabboufe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@
 # include <stdint.h>
 
 # define NB_OF_INSTRUCTION 16
-
-# define P1(byte) ((byte & 0b11000000) >> 6)
-# define P2(byte) ((byte & 0b00110000) >> 4)
-# define P3(byte) ((byte & 0b00001100) >> 2)
 
 typedef struct		s_op
 {
@@ -35,13 +31,13 @@ typedef struct		s_op
 	char			direct_size;
 }					t_op;
 
-typedef struct      s_corefile
+typedef struct		s_corefile
 {
-    t_header        header;
-    uint8_t         champ[CHAMP_MAX_SIZE];
-    unsigned int    index;
-    int             fd;
-}                   t_corefile;
+	t_header		header;
+	uint8_t			champ[CHAMP_MAX_SIZE];
+	unsigned int	index;
+	int				fd;
+}					t_corefile;
 
 typedef struct		s_uint8file
 {
@@ -60,7 +56,6 @@ void				w_header(t_corefile *file);
 unsigned int		w_program(t_corefile *file);
 int					check_type(uint8_t *champ, unsigned int pc);
 unsigned int		w_param(unsigned int type, uint8_t op_code,
-    					t_corefile *file);
-
+						t_corefile *file);
 
 #endif

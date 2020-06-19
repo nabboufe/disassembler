@@ -6,14 +6,14 @@
 /*   By: nabboufe <nabboufe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 15:25:04 by nabboufe          #+#    #+#             */
-/*   Updated: 2020/06/19 21:42:58 by nabboufe         ###   ########.fr       */
+/*   Updated: 2020/06/19 23:28:36 by nabboufe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/disassemble.h"
 #include <fcntl.h>
 
-static 			uint8_t g_type[4] = {
+static			uint8_t g_type[4] = {
 	0,
 	T_REG,
 	T_DIR,
@@ -49,16 +49,18 @@ int				check_type(uint8_t *champ, unsigned int pc)
 	uint8_t		valid_count;
 
 	op_code = champ[pc % MEM_SIZE] - 1;
-	printf("%d | %d | 1\n", op_code, pc);
 	if (!g_op_tab[op_code].carry)
 		return (1);
 	encoded = champ[(pc + 1) % MEM_SIZE];
 	valid_count = 0;
-	if (g_type[P1(encoded)] & g_op_tab[op_code].type_arr[0])
+	if (g_type[((encoded & 0b11000000) >> 6)]
+			& g_op_tab[op_code].type_arr[0])
 		valid_count += 1;
-	if (g_type[P2(encoded)] & g_op_tab[op_code].type_arr[1])
+	if (g_type[((encoded & 0b00110000) >> 4)]
+			& g_op_tab[op_code].type_arr[1])
 		valid_count += 1;
-	if (g_type[P3(encoded)] & g_op_tab[op_code].type_arr[2])
+	if (g_type[((encoded & 0b00001100) >> 2)]
+			& g_op_tab[op_code].type_arr[2])
 		valid_count += 1;
 	return (g_op_tab[op_code].nbr_arg == valid_count);
 }

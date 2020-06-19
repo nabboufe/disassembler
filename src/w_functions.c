@@ -6,7 +6,7 @@
 /*   By: nabboufe <nabboufe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 17:49:26 by nabboufe          #+#    #+#             */
-/*   Updated: 2020/06/19 21:43:03 by nabboufe         ###   ########.fr       */
+/*   Updated: 2020/06/19 23:23:01 by nabboufe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,24 +74,23 @@ unsigned int			w_program(t_corefile *file)
 	encode = 0;
 	if (!check_type(file->champ, file->index))
 		wrong_cor(file);
-	printf("2 - file->index == %d\n", file->index);
 	op_code = file->champ[file->index];
 	file->index += w_program_op(op_code, file);
-	printf("3 - file->index == %d\n", file->index);
 	if (g_op_tab[op_code - 1].carry == 1)
 	{
 		encode = file->champ[file->index++];
-		if (P1(encode))
-			file->index += w_param(P1(encode), op_code, file);
-		if (P2(encode))
-			file->index += w_param(P2(encode), op_code, file);
-		if (P3(encode))
-			file->index += w_param(P3(encode), op_code, file);
-		printf("4 - file->index == %d\n", file->index);
+		if (((encode & 0b11000000) >> 6))
+			file->index += w_param(((encode & 0b11000000) >> 6),
+				op_code, file);
+		if (((encode & 0b00110000) >> 4))
+			file->index += w_param(((encode & 0b00110000) >> 4),
+				op_code, file);
+		if (((encode & 0b00001100) >> 2))
+			file->index += w_param(((encode & 0b00001100) >> 2),
+				op_code, file);
 	}
 	else
 		file->index += write_lzf(op_code, file);
-	printf("5 - file->index == %d\n", file->index);
 	write(file->fd, "\n", 1);
 	return (0);
 }
