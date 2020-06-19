@@ -6,7 +6,7 @@
 /*   By: nabboufe <nabboufe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 17:49:26 by nabboufe          #+#    #+#             */
-/*   Updated: 2020/06/19 23:49:12 by nabboufe         ###   ########.fr       */
+/*   Updated: 2020/06/19 23:51:08 by nabboufe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void					w_header(t_corefile *file)
 	write(file->fd, "\"\n\n", 3);
 }
 
-static unsigned	int 	w_program_op(uint8_t op_code, t_corefile *file)
+static unsigned	int		w_program_op(uint8_t op_code, t_corefile *file)
 {
 	if (op_code > 0 && op_code < 17)
 	{
@@ -39,7 +39,7 @@ static void				wrong_cor(t_corefile *file)
 	exit(0);
 }
 
-static unsigned	int 	write_lzf(uint8_t op_code, t_corefile *file)
+static unsigned	int		write_lzf(uint8_t op_code, t_corefile *file)
 {
 	int16_t		param;
 	int32_t		param1;
